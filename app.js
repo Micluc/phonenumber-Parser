@@ -16,14 +16,15 @@ router.get('/api/phonenumbers/parse/text/:phoneNum',(req, res) => {
 	var num = req.params.phoneNum.toString().replace(/\D/g, '');
 	var list = [];
 
-	if(req.params.phoneNum == 'nothing' || req.params.phoneNum == '' || num.length < 10 || num.length > 11){
+	if(req.params.phoneNum == 'nothing' || req.params.phoneNum == '' || num.length < 10 || num.length > 11 || num > 19999999999){
 		res.status(400).send([]);
 	}
 	else{
 		var phoneNumber = phoneUtil.parse(num, 'CA');
 		list.push(phoneUtil.format(phoneNumber, PNF.INTERNATIONAL));
+		res.status(200).send(list);
 	}
-	res.status(200).send(list);
+
 });
 
 router.get('/',(req, res) => {
